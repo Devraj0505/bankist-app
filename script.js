@@ -239,3 +239,26 @@ btnSort.addEventListener('click', function (e) {
   displayMovements(currentAccount.movements, !sorted);
   sorted = !sorted;
 });
+
+// converting nodelist into array
+// document.querySelectorAll('.movements__value') this is an object in array.form it has selected an div element
+
+// array.from returning 2 nodelist value bcs inhtml there is only 2 value which css property is .movement__value
+
+const movementsUI = Array.from(document.querySelectorAll('.movements__value'));
+console.log(movementsUI);
+
+// labelBalance.addEventListener('click', function () {
+//   const movementsUI = Array.from(
+//     document.querySelectorAll('.movements__value'), //go to the entire document and find .movemet__value
+//   );
+//   console.log(movementsUI);
+// });
+
+labelBalance.addEventListener('click', function () {
+  const movementsUI = Array.from(
+    document.querySelectorAll('.movements__value'), //go to the entire document and find .movemet__value
+    el => el.textContent.replace('€', ''),
+  );
+  console.log(movementsUI);
+});
