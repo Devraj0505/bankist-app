@@ -110,14 +110,16 @@ const inputClosePin = document.querySelector('.form__input--pin');
 const displayMovements = function (acc, sort = false) {
   containerMovements.innerHTML = '';
 
-  const movs = sort ? acc.slice().sort((a, b) => a - b) : acc;
+  const movs = sort
+    ? acc.movements.slice().sort((a, b) => a - b)
+    : acc.movements;
 
   movs.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
 
-    const date_1 = new Date();
+    const date_1 = new Date(acc.movementsDates[i]);
     const day = `${date_1.getDate()}`.padStart(2, 0);
-    const month = `${date_1.getMonth()}`.padStart(2, 0);
+    const month = `${date_1.getMonth() + 1}`.padStart(2, 0);
     const year = date_1.getFullYear();
     const displayDate = `${day}/${month}/${year}`;
 
@@ -191,7 +193,7 @@ const calcSummary = function (acc) {
 
 const updateUI = function (acc) {
   //  display movements
-  displayMovements(acc.movements);
+  displayMovements(acc);
   // display balance
   calcDisplayBalance(acc);
   //  display summary
@@ -217,6 +219,7 @@ const minutes = now.getMinutes();
 
 labelDate.textContent = `${day}/${month}/${year}, ${hour}:${minutes}`;
 
+// login part
 btnLogin.addEventListener('click', function (e) {
   e.preventDefault();
 
