@@ -210,14 +210,14 @@ updateUI(currentAccount);
 containerApp.style.opacity = 100;
 
 // coreecting the deafualt date
-const now = new Date();
+/* const now = new Date();
 const day = `${now.getDate()}`.padStart(2, 0);
 const month = `${now.getMonth() + 1}`.padStart(2, 0);
 const year = `${now.getFullYear()}`.padStart(2, 0);
 const hour = `${now.getHours()}`.padStart(2, 0);
 const minutes = now.getMinutes();
 
-labelDate.textContent = `${day}/${month}/${year}, ${hour}:${minutes}`;
+labelDate.textContent = `${day}/${month}/${year}, ${hour}:${minutes}`; */
 
 // login part
 btnLogin.addEventListener('click', function (e) {
@@ -236,6 +236,16 @@ btnLogin.addEventListener('click', function (e) {
     }`;
     // display ui
     containerApp.style.opacity = 1;
+
+    // date time implementation
+    const now = new Date();
+    const day = `${now.getDate()}`.padStart(2, 0);
+    const month = `${now.getMonth() + 1}`.padStart(2, 0);
+    const year = `${now.getFullYear()}`.padStart(2, 0);
+    const hour = `${now.getHours()}`.padStart(2, 0);
+    const minutes = `${now.getMinutes()}`.padStart(2, 0);
+
+    labelDate.textContent = `${day}/${month}/${year}, ${hour}:${minutes}`;
 
     // clear input fileds
     inputLoginUsername.value = inputLoginPin.value = '';
@@ -305,6 +315,7 @@ btnLoan.addEventListener('click', function (e) {
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
     // add movement
     currentAccount.movements.push(amount);
+
     // adding dates on loan
     currentAccount.movementsDates.push(new Date().toISOString());
 
