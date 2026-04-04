@@ -360,17 +360,20 @@ btnClose.addEventListener('click', function (e) {
 btnLoan.addEventListener('click', function (e) {
   e.preventDefault();
   const amount = Math.floor(inputLoanAmount.value);
+
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
-    // add movement
-    currentAccount.movements.push(amount);
+    setTimeout(function () {
+      // add movement
+      currentAccount.movements.push(amount);
 
-    // adding dates on loan
-    currentAccount.movementsDates.push(new Date().toISOString());
+      // adding dates on loan
+      currentAccount.movementsDates.push(new Date().toISOString());
 
-    inputLoanAmount.value = '';
-    inputLoanAmount.blur();
-    // update ui
-    updateUI(currentAccount);
+      inputLoanAmount.value = '';
+      inputLoanAmount.blur();
+      // update ui
+      updateUI(currentAccount);
+    }, 3000);
   }
 });
 
