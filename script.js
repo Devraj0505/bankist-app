@@ -126,6 +126,14 @@ const formatMovementDates = function (date, local) {
   return new Intl.DateTimeFormat(local).format(date);
 };
 
+// formatted numbers
+const formattedCurr = function (value, locale, currency) {
+  return new Intl.NumberFormat(locale, {
+    style: 'currency',
+    currency: currency,
+  }).format(value);
+};
+
 const displayMovements = function (acc, sort = false) {
   containerMovements.innerHTML = '';
 
@@ -148,12 +156,13 @@ const displayMovements = function (acc, sort = false) {
 
     const date_1 = new Date(movementsDates);
     const displayDate = formatMovementDates(date_1, acc.locale);
+    const formattedMov = formattedCurr(movements, acc.locale, acc.currency);
 
     const html = `       
      <div class="movements__row">
           <div class="movements__type movements__type--${type}">${i + 1} ${type}</div>
           <div class="movements__date">${displayDate}</div>
-          <div class="movements__value">${movements.toFixed(2)} €</div>
+          <div class="movements__value">${formattedMov}</div>
         </div>`;
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
@@ -178,7 +187,8 @@ console.log(accounts);
 // updating total balance using reduce method
 const calcDisplayBalance = function (acc) {
   acc.balance = acc.movements.reduce((acc, curr) => (acc += curr), 0);
-  labelBalance.textContent = `${acc.balance}€`;
+  const formattedMov = formattedCurr(acc.balance, acc.locale, acc.currency);
+  labelBalance.textContent = `${formattedMov}`;
 };
 // calcDisplayBalance(account1.movements);
 
@@ -191,7 +201,7 @@ const calcSummary = function (acc) {
     .filter(mov => mov > 0)
     .reduce((acc, mov) => acc + mov, 0);
 
-  labelSumIn.textContent = `${incomes.toFixed(2)}€`;
+  labelSumIn.textContent = `${formattedCurr(incomes, acc.locale, acc.currency)}`;
 
   // out money
   const debited = acc.movements
@@ -199,7 +209,7 @@ const calcSummary = function (acc) {
     .reduce((acc, mov) => acc + mov);
 
   // console.log(debited);
-  labelSumOut.textContent = `${Math.abs(debited).toFixed(2)}€`;
+  labelSumOut.textContent = `${formattedCurr(debited, acc.locale, acc.currency)}`;
 
   // interest
   const interest = acc.movements
@@ -211,7 +221,7 @@ const calcSummary = function (acc) {
     })
     .reduce((acc, int) => acc + int, 0);
   // console.log(interest);
-  labelSumInterest.textContent = `${interest.toFixed(2)}€`;
+  labelSumInterest.textContent = `${formattedCurr(interest, acc.locale, acc.currency)}`;
 };
 // calcSummary(account1.movements);
 
