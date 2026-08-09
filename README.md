@@ -1,5 +1,7 @@
 # Bankist App
 
+This project is a demo banking dashboard built with vanilla HTML, CSS, and JavaScript. It simulates a bank app where users can log in, view account movements, transfer money, request loans, and close their account.
+
 This is a simple banking app project that demonstrates login, transaction display, transfers, loans, and account closing.
 
 ## Available Accounts
